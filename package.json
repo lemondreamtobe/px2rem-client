@@ -1,6 +1,6 @@
 {
   "name": "px2rem-client",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "客户端px转rem",
   "main": "./src/index",
   "scripts": {
