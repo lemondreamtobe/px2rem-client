@@ -1,6 +1,6 @@
 {
   "name": "px2rem-client",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "客户端px转rem",
   "main": "./src/index",
   "scripts": {
@@ -15,10 +15,10 @@
     "url": "https://github.com/lemondreamtobe/px2rem-client.git"
   },
   "keywords": [
-    "change",
-    "auto",
-    "theme",
-    "color"
+    "px",
+    "transform",
+    "rem",
+    "mobile"
   ],
   "author": "lemon",
   "license": "ISC",
