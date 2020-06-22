@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    window.external.UserAgent = JSON.stringify({
+      en: '5.1.16.0001'
+    })
+  </script>
+  <script src="./dist/bundle.js"></script>
+  <style>
+    .color {
+      font-size: 20px;
+    }
+
+    .color>div {
+      height: 50px;
+    }
+
+    .color .h1 {
+      color: #65AD57;
+      background: #65AD57;
+    }
+
+    .color .h2 {
+      color: #6DBA5D;
+      background: #6DBA5D;
+    }
+
+    .color .h3 {
+      color: #5EA150;
+      background: #5EA150;
+    }
+
+    .color .h4 {
+      color: #61A653;
+      background: #61A653;
+    }
+
+    .color .h5 {
+      color: #56944A;
+      background: #56944A;
+    }
+
+    .color .h6 {
+      color: #D8F0D3;
+      background: #D8F0D3;
+    }
+
+    .color .h7 {
+      color: #BFE0B8;
+      background: #BFE0B8;
+    }
+
+    .color .h8 {
+      color: #EDFAE6;
+      background: #EDFAE6;
+    }
+
+    .color .h9 {
+      color: rgba(86, 148, 74, 0.8);
+      background: rgba(86, 148, 74, 0.8);
+    }
+
+    label {
+      color: white;
+      background: #0068db;
+      min-width: 100px;
+      line-height: 125x;
+      font-size: 15px;
+      text-align: center;
+      padding: 2px 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="color">
+    <div class="h1">#65AD57</div>
+    <div class="h2">#6DBA5D</div>
+    <div class="h3">#5EA150</div>
+    <div class="h4">#61A653</div>
+    <div class="h5">#56944A</div>
+    <div class="h6">#D8F0D3</div>
+    <div class="h7">#BFE0B8</div>
+    <div class="h8">#EDFAE6</div>
+    <div class="h9">rgba(86, 148, 74, 0.8)</div>
+  </div>
+  <div style="text-align: center;">
+    <h1>主题色控制台</h1>
+    <label id="changeColor">一键换肤</label>
+    <label id="getCurrent">获取当前应该应用的主题色</label>
+    <label id="getAll">获取可支持的所有主题色</label>
+    <label id="setVersion">如果发现版本过低 点击我</label>
+    <label id="getVersion">获取当前客户端版本</label>
+    <label id="extendVersion">拓展一个v3版本颜色</label>
+    <label id="optional">需要hack替换额外的主题 例如rgba</label>
+  </div>
+  <div>
+    <h3>v3 版本的颜色</h3>
+    <ul>
+      <li>green1: '#6BBD57',</li>
+      <li>green2: '#6ACA5D',</li>
+      <li>green3: '#5CC250',</li>
+      <li>green4: '#6CA653',</li>
+      <li>green5: '#51944A',</li>
+      <li>green6: '#28F0D3',</li>
+      <li>green7: '#CFE0B8',</li>
+      <li>green8: '#FDFAE6',</li>
+    </ul>
+  </div>
+</body>
+<script>
+  var ifToggle = false;
+
+  function addEvent(el, name, fn) {
+
+    if (el.addEventListener) return el.addEventListener(name, fn, false); //在火狐中会执行这一句
+    return el.attachEvent('on' + name, fn); //在ie中执行这一句
+  }
+
+  function setCookie(name, value, days) {
+    //三个参数，一个是cookie的名子，一个是值，最后一个是天数
+    var exp = new Date(); //new Date("December 31, 9998");
+    exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+  }
+
+  addEvent(document.getElementById('setVersion'), 'click', function () {
+    if (window.EN5_theme_manager) {
+      alert('当前版本支持换肤');
+      return;
+    }
+    setCookie('App-Versions', '5.1.16.0000');
+    window.location.reload();
+  });
+
+  addEvent(document.getElementById('extendVersion'), 'click', function () {
+    if (!window.EN5_theme_manager) {
+      alert('当前版本过低');
+      return;
+    }
+    window.EN5_theme_manager.extendTheme({
+      v3: {
+        green1: '#6BBD57',
+        green2: '#6ACA5D',
+        green3: '#5CC250',
+        green4: '#6CA653',
+        green5: '#51944A',
+        green6: '#28F0D3',
+        green7: '#CFE0B8',
+        green8: '#FDFAE6',
+      }
+    });
+    window.EN5_theme_manager.applyNewTheme('v3');
+  });
+
+  addEvent(document.getElementById('optional'), 'click', function () {
+    if (!window.EN5_theme_manager) {
+      alert('当前版本过低');
+      return;
+    }
+    window.EN5_theme_manager.setOptionalTheme({
+      'rgba(86, 148, 74, 0.8)': 'rgba(0, 167, 82, 0.8)'
+    });
+
+    window.EN5_theme_manager.applyNewTheme();
+  });
+
+  addEvent(document.getElementById('getVersion'), 'click', function () {
+    alert(window.EN5_theme_manager.getCurrentVersion())
+  });
+
+  addEvent(document.getElementById('getCurrent'), 'click', function () {
+    if (!window.EN5_theme_manager) {
+      alert('当前版本过低');
+      return;
+    }
+    console.log(window.EN5_theme_manager.getCurrentTheme())
+    alert('获取成功 请打开控制台查看')
+    //  alert(window.EN5_theme_manager.getTheme().toString())
+  });
+
+  addEvent(document.getElementById('getAll'), 'click', function () {
+    if (!window.EN5_theme_manager) {
+      alert('当前版本过低');
+      return;
+    }
+    console.log(window.EN5_theme_manager.getAllTheme())
+    alert('获取成功 请打开控制台查看')
+
+    //  alert(window.EN5_theme_manager.getTheme().toString())
+  });
+
+  addEvent(document.getElementById('changeColor'), 'click', function () {
+
+    if (!window.EN5_theme_manager) {
+      alert('当前版本过低');
+      return;
+    }
+    console.log(window.EN5_theme_manager)
+    window.EN5_theme_manager.applyNewTheme();
+  });
+</script>
+
+</html>
